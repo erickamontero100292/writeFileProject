@@ -1,9 +1,14 @@
 package com.file;
 
 import com.file.exception.WrongExtensionException;
+import com.file.operations.AbstractFile;
+import com.file.operations.FileTxt;
 import com.file.operations.Service;
 import com.file.operations.ServiceImpl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -13,15 +18,18 @@ public class Main {
         service = new ServiceImpl();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // write your code here
         service = new ServiceImpl();
-//        String fileName = getNameFile();
+        String fileName = getNameFile();
         String typeFile = getFileExtension();
-//        System.out.println("The file name is : " + fileName);
-        System.out.println("The extension name is : " + typeFile);
 
-
+        AbstractFile fileTxt = new FileTxt();
+        File file  =fileTxt.createFile(fileName,typeFile);
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write("Is this test");
+        fileWriter.close();
+        System.out.println("Successfully wrote to the file.");
     }
 
     private static String getFileExtension() {
